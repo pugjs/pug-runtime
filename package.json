@@ -1,6 +1,6 @@
 {
   "name": "jade-runtime",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "The runtime components for the jade templating language",
   "keywords": [],
   "dependencies": {},

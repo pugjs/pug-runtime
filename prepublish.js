@@ -3,6 +3,11 @@
 var fs = require('fs');
 var uglify = require('uglify-js');
 
+try {
+  fs.mkdirSync(__dirname + '/lib');
+} catch (ex) {
+  if (ex.code !== 'EEXIST') throw ex;
+}
 var source = fs.readFileSync(__dirname + '/index.js', 'utf8');
 var ast = uglify.parse(source);
 

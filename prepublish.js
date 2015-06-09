@@ -3,6 +3,11 @@
 var fs = require('fs');
 var uglify = require('uglify-js');
 
+var files = [
+  'index.js',
+  'build.js',
+  'lib/dependencies.js'
+];
 try {
   fs.mkdirSync(__dirname + '/lib');
 } catch (ex) {
@@ -27,6 +32,7 @@ ast.body.forEach(function (node) {
     dependencies[name] = globals.filter(function (key) { return /^jade\_/.test(key); })
                                 .map(function (key) { return key.replace(/^jade\_/, ''); });
     fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
+    files.push('lib/' + name + '.js');
   } else if (node.TYPE === 'Var') {
     var name = node.definitions[0].name.name;
     if (!/^jade\_/.test(name)) return;
@@ -34,7 +40,11 @@ ast.body.forEach(function (node) {
     var src = uglify.minify(source.substring(node.start.pos, node.end.endpos), {fromString: true}).code;
     dependencies[name] = [];
     fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
+    files.push('lib/' + name + '.js');
   }
 });
 
 fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies));
+var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8'));
+pkg.files = files.sort();
+fs.writeFileSync(__dirname + '/package.json', JSON.stringify(pkg, null, '  '));

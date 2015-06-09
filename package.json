@@ -9,6 +9,21 @@
     "testit": "^1.2.0",
     "uglify-js": "^2.4.16"
   },
+  "files": [
+    "build.js",
+    "index.js",
+    "lib/attr.js",
+    "lib/attrs.js",
+    "lib/classes.js",
+    "lib/dependencies.js",
+    "lib/encode_char.js",
+    "lib/encode_html_rules.js",
+    "lib/escape.js",
+    "lib/match_html.js",
+    "lib/merge.js",
+    "lib/rethrow.js",
+    "lib/style.js"
+  ],
   "scripts": {
     "prepublish": "node prepublish",
     "pretest": "npm run prepublish",

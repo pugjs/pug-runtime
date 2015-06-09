@@ -22,6 +22,13 @@ ast.body.forEach(function (node) {
     dependencies[name] = globals.filter(function (key) { return /^jade\_/.test(key); })
                                 .map(function (key) { return key.replace(/^jade\_/, ''); });
     fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
+  } else if (node.TYPE === 'Var') {
+    var name = node.definitions[0].name.name;
+    if (!/^jade\_/.test(name)) return;
+    name = name.replace(/^jade\_/, '');
+    var src = uglify.minify(source.substring(node.start.pos, node.end.endpos), {fromString: true}).code;
+    dependencies[name] = [];
+    fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
   }
 });
 

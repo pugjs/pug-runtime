@@ -138,19 +138,19 @@ function jade_attrs(obj, terse){
  * @api private
  */
 
-var ENCODE_HTML_RULES = {
-    '&': '&amp;'
-  , '<': '&lt;'
-  , '>': '&gt;'
-  , '"': '&quot;'
-  }
-, MATCH_HTML = /[&<>"]/g;
-
+var jade_encode_html_rules = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;'
+};
+var jade_match_html = /[&<>"]/g;
+function jade_encode_char(c) {
+  return jade_encode_html_rules[c] || c;
+}
 exports.escape = jade_escape;
 function jade_escape(html){
-  var result = String(html).replace(MATCH_HTML, function(m) {
-    return ENCODE_HTML_RULES[m] || m;
-  });
+  var result = String(html).replace(jade_match_html, jade_encode_char);
   if (result === '' + html) return html;
   else return result;
 };

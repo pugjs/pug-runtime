@@ -39,21 +39,38 @@ function jade_merge(a, b) {
 };
 
 /**
- * join array as classes.
+ * Process array, object, or string as a string of classes delimited by a space.
  *
- * @param {*} val
+ * If `val` is an array, all members of it and its subarrays are counted as
+ * classes. If `escaping` is an array, then whether or not the item in `val` is
+ * escaped depends on the corresponding item in `escaping`. If `escaping` is
+ * not an array, no escaping is done.
+ *
+ * If `val` is an object, all the keys whose value is truthy are counted as
+ * classes. No escaping is done.
+ *
+ * If `val` is a string, it is counted as a class. No escaping is done.
+ *
+ * @param {(Array.<string>|Object.<string, boolean>|string)} val
+ * @param {?Array.<string>} escaping
  * @return {String}
  */
 exports.classes = jade_classes;
 function jade_classes(val, escaping) {
-  if (Array.isArray(val) && Array.isArray(escaping)) {
-    return jade_classes(val.map(jade_classes).map(function (cls, i) {
-      return escaping[i] ? jade_escape(cls) : cls;
-    }));
+  if (Array.isArray(val)) {
+    if (Array.isArray(escaping)) {
+      return jade_classes(val.map(jade_classes).map(function (cls, i) {
+        return escaping[i] ? jade_escape(cls) : cls;
+      }));
+    }
+    return val.map(jade_classes).filter(Boolean).join(' ');
+  } else if (val && typeof val === 'object') {
+    return Object.keys(val).filter(function (key) {
+      return val[key];
+    }).filter(Boolean).join(' ');
+  } else {
+    return val || '';
   }
-  return (Array.isArray(val) ? val.map(jade_classes) :
-    (val && typeof val === 'object') ? Object.keys(val).filter(function (key) { return val[key]; }) :
-    [val]).filter(Boolean).join(' ');
 }
 
 exports.style = jade_style;

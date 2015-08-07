@@ -70,7 +70,7 @@ function jade_classes_array(val, escaping) {
 function jade_classes_object(val) {
   var classString = '', padding = '';
   for (var key in val) {
-    if (val[key] && val.hasOwnProperty(key)) {
+    if (key && val[key] && val.hasOwnProperty(key)) {
       classString = classString + padding + key;
       padding = ' ';
     }

@@ -15,6 +15,8 @@
     "lib/attr.js",
     "lib/attrs.js",
     "lib/classes.js",
+    "lib/classes_array.js",
+    "lib/classes_object.js",
     "lib/dependencies.js",
     "lib/encode_char.js",
     "lib/encode_html_rules.js",

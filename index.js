@@ -58,17 +58,24 @@ function jade_merge(a, b) {
 exports.classes = jade_classes;
 function jade_classes(val, escaping) {
   if (Array.isArray(val)) {
-    if (Array.isArray(escaping)) {
-      return jade_classes(val.map(jade_classes).map(function (cls, i) {
-        return escaping[i] ? jade_escape(cls) : cls;
-      }));
-    } else {
-      return val.map(jade_classes).filter(Boolean).join(' ');
+    var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
+    for (var i = 0; i < val.length; i++) {
+      className = jade_classes(val[i]);
+      if (!className) continue;
+      escapeEnabled && escaping[i] && (className = jade_escape(className));
+      classString = classString + padding + className;
+      padding = ' ';
     }
+    return classString;
   } else if (val && typeof val === 'object') {
-    return Object.keys(val).filter(function (key) {
-      return val[key];
-    }).filter(Boolean).join(' ');
+    var classString = '', padding = '';
+    for (var key in val) {
+      if (val[key] && val.hasOwnProperty(key)) {
+        classString = classString + padding + key;
+        padding = ' ';
+      }
+    }
+    return classString;
   } else {
     return val || '';
   }

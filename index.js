@@ -56,26 +56,32 @@ function jade_merge(a, b) {
  * @return {String}
  */
 exports.classes = jade_classes;
-function jade_classes(val, escaping) {
-  if (Array.isArray(val)) {
-    var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
-    for (var i = 0; i < val.length; i++) {
-      className = jade_classes(val[i]);
-      if (!className) continue;
-      escapeEnabled && escaping[i] && (className = jade_escape(className));
-      classString = classString + padding + className;
+function jade_classes_array(val, escaping) {
+  var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
+  for (var i = 0; i < val.length; i++) {
+    className = jade_classes(val[i]);
+    if (!className) continue;
+    escapeEnabled && escaping[i] && (className = jade_escape(className));
+    classString = classString + padding + className;
+    padding = ' ';
+  }
+  return classString;
+}
+function jade_classes_object(val) {
+  var classString = '', padding = '';
+  for (var key in val) {
+    if (val[key] && val.hasOwnProperty(key)) {
+      classString = classString + padding + key;
       padding = ' ';
     }
-    return classString;
+  }
+  return classString;
+}
+function jade_classes(val, escaping) {
+  if (Array.isArray(val)) {
+    return jade_classes_array(val, escaping);
   } else if (val && typeof val === 'object') {
-    var classString = '', padding = '';
-    for (var key in val) {
-      if (val[key] && val.hasOwnProperty(key)) {
-        classString = classString + padding + key;
-        padding = ' ';
-      }
-    }
-    return classString;
+    return jade_classes_object(val);
   } else {
     return val || '';
   }

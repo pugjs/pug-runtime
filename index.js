@@ -74,6 +74,13 @@ function jade_classes(val, escaping) {
   }
 }
 
+/**
+ * Convert object or string to a string of CSS styles delimited by a semicolon.
+ *
+ * @param {(Object.<string, string>|string)} val
+ * @return {String}
+ */
+
 exports.style = jade_style;
 function jade_style(val) {
   if (val && typeof val === 'object') {
@@ -123,7 +130,7 @@ function jade_attr(key, val, escaped, terse) {
  * Render the given attributes object.
  *
  * @param {Object} obj
- * @param {Object} escaped
+ * @param {Object} terse whether to use HTML5 terse boolean attributes
  * @return {String}
  */
 exports.attrs = jade_attrs;
@@ -180,6 +187,7 @@ function jade_escape(html){
  * @param {Error} err
  * @param {String} filename
  * @param {String} lineno
+ * @param {String} str original source
  * @api private
  */
 

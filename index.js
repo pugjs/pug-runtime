@@ -161,6 +161,8 @@ function jade_attrs(obj, terse){
 
     if ('class' === key) {
       val = jade_classes(val);
+      attrs = jade_attr(key, val, false, terse) + attrs;
+      continue;
     }
     if ('style' === key) {
       val = jade_style(val);

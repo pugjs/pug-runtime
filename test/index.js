@@ -72,6 +72,8 @@ test('attrs', function (attrs) { // (obj, terse)
   assert(attrs({class: ''}, false) === '');
   assert(attrs({class: ['foo', {bar: true}]}, true) === ' class="foo bar"');
   assert(attrs({class: ['foo', {bar: true}]}, false) === ' class="foo bar"');
+  assert(attrs({class: ['foo', {bar: true}], foo: 'bar'}, true) === ' class="foo bar" foo="bar"');
+  assert(attrs({foo: 'bar', class: ['foo', {bar: true}]}, false) === ' class="foo bar" foo="bar"');
   assert(attrs({style: 'foo: bar;'}, true) === ' style="foo: bar"');
   assert(attrs({style: 'foo: bar;'}, false) === ' style="foo: bar"');
   assert(attrs({style: {foo: 'bar'}}, true) === ' style="foo:bar"');

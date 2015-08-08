@@ -93,6 +93,7 @@ test('escape', function (escape) {
   assert(escape('foo&<bar') === 'foo&amp;&lt;bar');
   assert(escape('foo&<>bar') === 'foo&amp;&lt;&gt;bar');
   assert(escape('foo&<>"bar') === 'foo&amp;&lt;&gt;&quot;bar');
+  assert(escape('foo&<>"bar"') === 'foo&amp;&lt;&gt;&quot;bar&quot;');
 });
 
 test('merge', function (merge) {

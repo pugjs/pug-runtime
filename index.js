@@ -96,12 +96,21 @@ function jade_classes(val, escaping) {
 
 exports.style = jade_style;
 function jade_style(val) {
-  if (val && typeof val === 'object') {
-    return Object.keys(val).map(function (style) {
-      return style + ':' + val[style];
-    }).join(';');
+  if (!val) return '';
+  if (typeof val === 'object') {
+    var out = '', delim = '';
+    for (var style in val) {
+      /* istanbul ignore else */
+      if (val.hasOwnProperty(style)) {
+        out = out + delim + style + ':' + val[style];
+        delim = ';';
+      }
+    }
+    return out;
   } else {
-    return ('' + (val || '')).replace(/\;$/, '');
+    val = '' + val;
+    if (val[val.length - 1] === ';') return val.slice(0, -1);
+    return val;
   }
 };
 

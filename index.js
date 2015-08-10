@@ -157,24 +157,23 @@ function jade_attr(key, val, escaped, terse) {
  */
 exports.attrs = jade_attrs;
 function jade_attrs(obj, terse){
-  var buf = [];
+  var attrs = '';
 
   var keys = Object.keys(obj);
-
   for (var i = 0; i < keys.length; ++i) {
     var key = keys[i]
       , val = obj[key];
 
-    if ('class' == key) {
+    if ('class' === key) {
       val = jade_classes(val);
     }
     if ('style' === key) {
       val = jade_style(val);
     }
-    buf.push(jade_attr(key, val, false, terse));
+    attrs += jade_attr(key, val, false, terse);
   }
 
-  return buf.join('');
+  return attrs;
 };
 
 /**

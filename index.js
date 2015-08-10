@@ -203,17 +203,18 @@ function jade_escape(_html){
   if (!regexResult) return _html;
 
   var result = '';
-  var i, lastIndex, c, escape;
+  var i, lastIndex, escape;
   for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-    c = html[i];
-    if ((c === '&' && (escape = '&amp;')) ||
-        (c === '<' && (escape = '&lt;')) ||
-        (c === '>' && (escape = '&gt;')) ||
-        (c === '"' && (escape = '&quot;'))) {
-      if (lastIndex !== i) result += html.substring(lastIndex, i);
-      lastIndex = i + 1;
-      result += escape;
+    switch (html[i]) {
+      case '&': escape = '&amp;'; break;
+      case '<': escape = '&lt;'; break;
+      case '>': escape = '&gt;'; break;
+      case '"': escape = '&quot;'; break;
+      default: continue;
     }
+    if (lastIndex !== i) result += html.substring(lastIndex, i);
+    lastIndex = i + 1;
+    result += escape;
   }
   if (lastIndex !== i) return result + html.substring(lastIndex, i);
   else return result;

@@ -191,7 +191,7 @@ var jade_encode_html_rules = {
   '>': '&gt;',
   '"': '&quot;'
 };
-var jade_match_html = /[&<>"]/g;
+var jade_match_html = /[&<>"]/;
 /* istanbul ignore next */
 function jade_encode_char(c) {
   return jade_encode_html_rules[c] || c;
@@ -199,9 +199,12 @@ function jade_encode_char(c) {
 exports.escape = jade_escape;
 function jade_escape(_html){
   var html = '' + _html;
+  var regexResult = jade_match_html.exec(html);
+  if (!regexResult) return _html;
+
   var result = '';
   var i, lastIndex, c, escape;
-  for (i = 0, lastIndex = 0; i < html.length; i++) {
+  for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
     c = html[i];
     if ((c === '&' && (escape = '&amp;')) ||
         (c === '<' && (escape = '&lt;')) ||
@@ -212,8 +215,7 @@ function jade_escape(_html){
       result += escape;
     }
   }
-  if (!result) return html;
-  else if (lastIndex !== i) return result + html.substring(lastIndex, i);
+  if (lastIndex !== i) return result + html.substring(lastIndex, i);
   else return result;
 };
 

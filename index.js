@@ -192,13 +192,26 @@ var jade_encode_html_rules = {
   '"': '&quot;'
 };
 var jade_match_html = /[&<>"]/g;
+/* istanbul ignore next */
 function jade_encode_char(c) {
   return jade_encode_html_rules[c] || c;
 }
 exports.escape = jade_escape;
-function jade_escape(html){
-  var result = String(html).replace(jade_match_html, jade_encode_char);
-  if (result === '' + html) return html;
+function jade_escape(_html){
+  var html = String(_html);
+  var result = '';
+  var i, lastIndex;
+  for (i = 0, lastIndex = 0; i < html.length; i++) {
+    var c = html[i];
+    if (c === '&' || c === '<' || c === '>' || c === '"') {
+      if (lastIndex !== i) result += html.substring(lastIndex, i);
+      result += jade_encode_html_rules[c];
+      lastIndex = i + 1;
+    }
+  }
+  if (lastIndex !== i) result += html.substring(lastIndex, i);
+
+  if (html === result) return _html;
   else return result;
 };
 

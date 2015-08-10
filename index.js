@@ -125,15 +125,13 @@ function jade_style(val) {
  */
 exports.attr = jade_attr;
 function jade_attr(key, val, escaped, terse) {
-  if ((key === 'class' || key === 'style') && !val) return '';
-  if ('boolean' == typeof val || null == val) {
-    if (val) {
-      return ' ' + (terse ? key : key + '="' + key + '"');
-    } else {
-      return '';
-    }
+  if (val === false || val == null || !val && (key === 'class' || key === 'style')) {
+    return '';
   }
-  if (val && typeof val.toISOString === 'function') {
+  if (val === true) {
+    return ' ' + (terse ? key : key + '="' + key + '"');
+  }
+  if (typeof val.toISOString === 'function') {
     val = val.toISOString();
   } else if (typeof val !== 'string') {
     val = JSON.stringify(val);
@@ -141,11 +139,8 @@ function jade_attr(key, val, escaped, terse) {
       return ' ' + key + '=\'' + val.replace(/'/g, '&apos;') + '\'';
     }
   }
-  if (escaped) {
-    return ' ' + key + '="' + jade_escape(val) + '"';
-  } else {
-    return ' ' + key + '="' + val + '"';
-  }
+  if (escaped) val = jade_escape(val);
+  return ' ' + key + '="' + val + '"';
 };
 
 /**

@@ -198,20 +198,22 @@ function jade_encode_char(c) {
 }
 exports.escape = jade_escape;
 function jade_escape(_html){
-  var html = String(_html);
+  var html = '' + _html;
   var result = '';
-  var i, lastIndex;
+  var i, lastIndex, c, escape;
   for (i = 0, lastIndex = 0; i < html.length; i++) {
-    var c = html[i];
-    if (c === '&' || c === '<' || c === '>' || c === '"') {
+    c = html[i];
+    if ((c === '&' && (escape = '&amp;')) ||
+        (c === '<' && (escape = '&lt;')) ||
+        (c === '>' && (escape = '&gt;')) ||
+        (c === '"' && (escape = '&quot;'))) {
       if (lastIndex !== i) result += html.substring(lastIndex, i);
-      result += jade_encode_html_rules[c];
       lastIndex = i + 1;
+      result += escape;
     }
   }
-  if (lastIndex !== i) result += html.substring(lastIndex, i);
-
-  if (html === result) return _html;
+  if (!result) return html;
+  else if (lastIndex !== i) return result + html.substring(lastIndex, i);
   else return result;
 };
 

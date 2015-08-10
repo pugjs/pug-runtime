@@ -24,12 +24,12 @@ function jade_merge(a, b) {
 
   for (var key in b) {
     if (key === 'class') {
-      var ac = a[key] || [];
-      a[key] = (Array.isArray(ac) ? ac : [ac]).concat(b[key] || []);
+      var valA = a[key] || [];
+      a[key] = (Array.isArray(valA) ? valA : [valA]).concat(b[key] || []);
     } else if (key === 'style') {
-      a[key] = jade_style(a[key]);
-      b[key] = jade_style(b[key]);
-      a[key] = a[key] + (a[key] && b[key] && ';') + b[key];
+      var valA = jade_style(a[key]);
+      var valB = jade_style(b[key]);
+      a[key] = valA + (valA && valB && ';') + valB;
     } else {
       a[key] = b[key];
     }

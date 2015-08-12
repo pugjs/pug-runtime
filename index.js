@@ -185,27 +185,32 @@ var jade_encode_html_rules = {
   '>': '&gt;',
   '"': '&quot;'
 };
-var jade_match_html = /[&<>"]/g;
+var jade_match_html = /[&<>"]/;
 /* istanbul ignore next */
 function jade_encode_char(c) {
   return jade_encode_html_rules[c] || c;
 }
 exports.escape = jade_escape;
 function jade_escape(_html){
-  var html = String(_html);
-  var result = '';
-  var i, lastIndex;
-  for (i = 0, lastIndex = 0; i < html.length; i++) {
-    var c = html[i];
-    if (c === '&' || c === '<' || c === '>' || c === '"') {
-      if (lastIndex !== i) result += html.substring(lastIndex, i);
-      result += jade_encode_html_rules[c];
-      lastIndex = i + 1;
-    }
-  }
-  if (lastIndex !== i) result += html.substring(lastIndex, i);
+  var html = '' + _html;
+  var regexResult = jade_match_html.exec(html);
+  if (!regexResult) return _html;
 
-  if (html === result) return _html;
+  var result = '';
+  var i, lastIndex, escape;
+  for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
+    switch (html[i]) {
+      case '&': escape = '&amp;'; break;
+      case '<': escape = '&lt;'; break;
+      case '>': escape = '&gt;'; break;
+      case '"': escape = '&quot;'; break;
+      default: continue;
+    }
+    if (lastIndex !== i) result += html.substring(lastIndex, i);
+    lastIndex = i + 1;
+    result += escape;
+  }
+  if (lastIndex !== i) return result + html.substring(lastIndex, i);
   else return result;
 };
 

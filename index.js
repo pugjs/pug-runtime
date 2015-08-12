@@ -179,7 +179,7 @@ function jade_attrs(obj, terse){
  * @api private
  */
 
-var jade_match_html = /[&<>"]/;
+var jade_match_html = /["&<>]/;
 exports.escape = jade_escape;
 function jade_escape(_html){
   var html = '' + _html;
@@ -189,11 +189,11 @@ function jade_escape(_html){
   var result = '';
   var i, lastIndex, escape;
   for (i = regexResult.index, lastIndex = 0; i < html.length; i++) {
-    switch (html[i]) {
-      case '&': escape = '&amp;'; break;
-      case '<': escape = '&lt;'; break;
-      case '>': escape = '&gt;'; break;
-      case '"': escape = '&quot;'; break;
+    switch (html.charCodeAt(i)) {
+      case 34: escape = '&quot;'; break;
+      case 38: escape = '&amp;'; break;
+      case 60: escape = '&lt;'; break;
+      case 62: escape = '&gt;'; break;
       default: continue;
     }
     if (lastIndex !== i) result += html.substring(lastIndex, i);

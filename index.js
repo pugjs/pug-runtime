@@ -179,17 +179,7 @@ function jade_attrs(obj, terse){
  * @api private
  */
 
-var jade_encode_html_rules = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;'
-};
 var jade_match_html = /[&<>"]/;
-/* istanbul ignore next */
-function jade_encode_char(c) {
-  return jade_encode_html_rules[c] || c;
-}
 exports.escape = jade_escape;
 function jade_escape(_html){
   var html = '' + _html;

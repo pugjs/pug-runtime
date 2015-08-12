@@ -18,8 +18,6 @@
     "lib/classes_array.js",
     "lib/classes_object.js",
     "lib/dependencies.js",
-    "lib/encode_char.js",
-    "lib/encode_html_rules.js",
     "lib/escape.js",
     "lib/match_html.js",
     "lib/merge.js",

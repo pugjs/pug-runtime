@@ -136,7 +136,7 @@ function jade_attr(key, val, escaped, terse) {
   } else if (typeof val !== 'string') {
     val = JSON.stringify(val);
     if (!escaped && val.indexOf('"') !== -1) {
-      return ' ' + key + '=\'' + val.replace(/'/g, '&apos;') + '\'';
+      return ' ' + key + '=\'' + val.replace(/'/g, '&#39;') + '\'';
     }
   }
   if (escaped) val = jade_escape(val);

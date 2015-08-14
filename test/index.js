@@ -42,7 +42,7 @@ test('attr', function (attr) { // (key, val, escaped, terse)
   assert(attr('key', {foo: 'bar'}, true, true) === ' key="{&quot;foo&quot;:&quot;bar&quot;}"');
   assert(attr('key', {foo: 'bar'}, false, true) === ' key=\'{"foo":"bar"}\'');
   assert(attr('key', {foo: 'don\'t'}, true, true) === ' key="{&quot;foo&quot;:&quot;don\'t&quot;}"');
-  assert(attr('key', {foo: 'don\'t'}, false, true) === ' key=\'{"foo":"don&apos;t"}\'');
+  assert(attr('key', {foo: 'don\'t'}, false, true) === ' key=\'{"foo":"don&#39;t"}\'');
 
   // Number attributes
   assert(attr('key', 500, true, true) === ' key="500"');

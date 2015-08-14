@@ -44,7 +44,11 @@ ast.body.forEach(function (node) {
   }
 });
 
-fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies));
+Object.keys(dependencies).forEach(function (fn) {
+  dependencies[fn] = dependencies[fn].sort();
+});
+
+fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies, null, 2) + '\n');
 var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8'));
 pkg.files = files.sort();
-fs.writeFileSync(__dirname + '/package.json', JSON.stringify(pkg, null, '  '));
+fs.writeFileSync(__dirname + '/package.json', JSON.stringify(pkg, null, 2) + '\n');

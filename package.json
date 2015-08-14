@@ -19,6 +19,7 @@
     "lib/classes_object.js",
     "lib/dependencies.js",
     "lib/escape.js",
+    "lib/internals.js",
     "lib/match_html.js",
     "lib/merge.js",
     "lib/rethrow.js",

@@ -2,11 +2,13 @@
 
 var fs = require('fs');
 var uglify = require('uglify-js');
+var runtime = require('./');
 
 var files = [
   'index.js',
   'build.js',
-  'lib/dependencies.js'
+  'lib/dependencies.js',
+  'lib/internals.js'
 ];
 try {
   fs.mkdirSync(__dirname + '/lib');
@@ -17,6 +19,7 @@ var source = fs.readFileSync(__dirname + '/index.js', 'utf8');
 var ast = uglify.parse(source);
 
 var dependencies = {};
+var internals = {'dependencies': true, 'internals': true};
 ast.body.forEach(function (node) {
   if (node.TYPE === 'Defun') {
     var name = node.name.name;
@@ -33,6 +36,7 @@ ast.body.forEach(function (node) {
                                 .map(function (key) { return key.replace(/^jade\_/, ''); });
     fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
     files.push('lib/' + name + '.js');
+    if (!runtime[name]) internals[name] = true;
   } else if (node.TYPE === 'Var') {
     var name = node.definitions[0].name.name;
     if (!/^jade\_/.test(name)) return;
@@ -41,10 +45,16 @@ ast.body.forEach(function (node) {
     dependencies[name] = [];
     fs.writeFileSync(__dirname + '/lib/' + name + '.js', src);
     files.push('lib/' + name + '.js');
+    if (!runtime[name]) internals[name] = true;
   }
 });
 
-fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies));
+Object.keys(dependencies).forEach(function (fn) {
+  dependencies[fn] = dependencies[fn].sort();
+});
+
+fs.writeFileSync(__dirname + '/lib/dependencies.js', 'module.exports = ' + JSON.stringify(dependencies, null, 2) + '\n');
+fs.writeFileSync(__dirname + '/lib/internals.js', 'module.exports = ' + JSON.stringify(internals, null, 2) + '\n');
 var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8'));
 pkg.files = files.sort();
-fs.writeFileSync(__dirname + '/package.json', JSON.stringify(pkg, null, '  '));
+fs.writeFileSync(__dirname + '/package.json', JSON.stringify(pkg, null, 2) + '\n');

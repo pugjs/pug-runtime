@@ -20,6 +20,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   now been removed. Please note that any further changes to these internal
   variables will not come with a major bump.
 
+### Added
+- A new module `require('jade-runtime/wrap')` is added to ease testing
+  client-side templates.
+
 ## 1.1.0 - 2015-07-09
 ### Changed
 - `escape()` has been optimized, making it about 20-30% faster. The new

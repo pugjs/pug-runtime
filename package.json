@@ -23,7 +23,8 @@
     "lib/match_html.js",
     "lib/merge.js",
     "lib/rethrow.js",
-    "lib/style.js"
+    "lib/style.js",
+    "wrap.js"
   ],
   "scripts": {
     "prepublish": "node prepublish",

@@ -7,6 +7,7 @@ var runtime = require('./');
 var files = [
   'index.js',
   'build.js',
+  'wrap.js',
   'lib/dependencies.js',
   'lib/internals.js'
 ];

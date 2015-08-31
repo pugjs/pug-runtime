@@ -37,7 +37,7 @@ When testing code compiled for the browser in Node.js, it is necessary to make t
 var jade = require('jade');
 var wrap = require('jade-runtime/wrap');
 
-var jadeSrc = 'p= body';
+var jadeSrc = 'p= content';
 // By default compileClient automatically embeds the needed runtime functions,
 // rendering this module useless.
 var compiledCode = jade.compileClient(jadeSrc, {
@@ -46,7 +46,7 @@ var compiledCode = jade.compileClient(jadeSrc, {
 //=> 'function template (locals) { ... jade.escape() ... }'
 
 var templateFunc = wrap(compiledCode);
-templateFunc({body: 'Hey!'});
+templateFunc({content: 'Hey!'});
 //=> '<p>Hey!</p>'
 
 // Change template function name to 'heyTemplate'
@@ -57,7 +57,7 @@ compiledCode = jade.compileClient(jadeSrc, {
 //=> 'function heyTemplate (locals) { ... }'
 
 templateFunc = wrap(compiledCode, 'heyTemplate');
-templateFunc({body: 'Hey!'});
+templateFunc({content: 'Hey!'});
 //=> '<p>Hey!</p>'
 ```
 

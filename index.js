@@ -1,5 +1,7 @@
 'use strict';
 
+var jade_has_own_property = Object.prototype.hasOwnProperty;
+
 /**
  * Merge two attribute objects giving precedence
  * to values in object `b`. Classes are special-cased
@@ -70,7 +72,7 @@ function jade_classes_array(val, escaping) {
 function jade_classes_object(val) {
   var classString = '', padding = '';
   for (var key in val) {
-    if (key && val[key] && val.hasOwnProperty(key)) {
+    if (key && val[key] && jade_has_own_property.call(val, key)) {
       classString = classString + padding + key;
       padding = ' ';
     }
@@ -101,7 +103,7 @@ function jade_style(val) {
     var out = '', delim = '';
     for (var style in val) {
       /* istanbul ignore else */
-      if (val.hasOwnProperty(style)) {
+      if (jade_has_own_property.call(val, style)) {
         out = out + delim + style + ':' + val[style];
         delim = ';';
       }

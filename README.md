@@ -31,6 +31,36 @@ var attr = Function('', src + ';return jade_attr;')();
 assert(attr('foo', 'bar', true, true) === ' foo="bar"');
 ```
 
+When testing code compiled for the browser in Node.js, it is necessary to make the runtime available. To do so, one can use `require('jade-runtime/wrap')`:
+
+```js
+var jade = require('jade');
+var wrap = require('jade-runtime/wrap');
+
+var jadeSrc = 'p= content';
+// By default compileClient automatically embeds the needed runtime functions,
+// rendering this module useless.
+var compiledCode = jade.compileClient(jadeSrc, {
+  externalRuntime: true
+});
+//=> 'function template (locals) { ... jade.escape() ... }'
+
+var templateFunc = wrap(compiledCode);
+templateFunc({content: 'Hey!'});
+//=> '<p>Hey!</p>'
+
+// Change template function name to 'heyTemplate'
+compiledCode = jade.compileClient(jadeSrc, {
+  externalRuntime: true,
+  name: 'heyTemplate'
+});
+//=> 'function heyTemplate (locals) { ... }'
+
+templateFunc = wrap(compiledCode, 'heyTemplate');
+templateFunc({content: 'Hey!'});
+//=> '<p>Hey!</p>'
+```
+
 
 ## License
 

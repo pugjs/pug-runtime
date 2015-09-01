@@ -4,12 +4,14 @@ var assert = require('assert');
 var testit = require('testit');
 var runtime = require('../');
 var build = require('../build');
+var wrap = require('../wrap');
 
 function test(name, fn) {
   testit(name, function () {
 
     fn(runtime[name]);
     fn(Function('', build([name]) + ';return jade_' + name + ';')());
+    fn(wrap('function t() {return jade.' + name + ';}', 't')())
   });
 }
 

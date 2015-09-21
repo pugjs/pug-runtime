@@ -4,11 +4,15 @@ var fs = require('fs');
 var dependencies = require('./lib/dependencies.js');
 var internals = require('./lib/internals.js');
 var source = {};
-fs.readdirSync(__dirname + '/lib').forEach(function (filename) {
-  if (filename !== 'dependencies.js' && filename !== 'internals.js') {
-    source[filename.replace(/\.js$/, '')] = fs.readFileSync(__dirname + '/lib/' + filename, 'utf8');
-  }
-});
+
+// check if fs is available to make this not crash when browserified
+if (fs && fs.readdirSync) {
+  fs.readdirSync(__dirname + '/lib').forEach(function (filename) {
+    if (filename !== 'dependencies.js' && filename !== 'internals.js') {
+      source[filename.replace(/\.js$/, '')] = fs.readFileSync(__dirname + '/lib/' + filename, 'utf8');
+    }
+  });
+}
 
 module.exports = build;
 

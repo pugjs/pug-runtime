@@ -3,16 +3,7 @@
 var fs = require('fs');
 var dependencies = require('./lib/dependencies.js');
 var internals = require('./lib/internals.js');
-var source = {};
-
-// check if fs is available to make this not crash when browserified
-if (fs && fs.readdirSync) {
-  fs.readdirSync(__dirname + '/lib').forEach(function (filename) {
-    if (filename !== 'dependencies.js' && filename !== 'internals.js') {
-      source[filename.replace(/\.js$/, '')] = fs.readFileSync(__dirname + '/lib/' + filename, 'utf8');
-    }
-  });
-}
+var sources = require('./lib/sources.js');
 
 module.exports = build;
 
@@ -28,6 +19,6 @@ function build(functions) {
     }
   }
   return fns.sort().map(function (name) {
-    return source[name];
+    return sources[name];
   }).join('\n');
 }

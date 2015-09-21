@@ -12,19 +12,9 @@
   "files": [
     "build.js",
     "index.js",
-    "lib/attr.js",
-    "lib/attrs.js",
-    "lib/classes.js",
-    "lib/classes_array.js",
-    "lib/classes_object.js",
     "lib/dependencies.js",
-    "lib/escape.js",
-    "lib/has_own_property.js",
     "lib/internals.js",
-    "lib/match_html.js",
-    "lib/merge.js",
-    "lib/rethrow.js",
-    "lib/style.js",
+    "lib/sources.js",
     "wrap.js"
   ],
   "scripts": {

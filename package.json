@@ -1,9 +1,9 @@
 {
-  "name": "jade-runtime",
+  "name": "pug-runtime",
   "version": "2.0.0",
-  "description": "The runtime components for the jade templating language",
+  "description": "The runtime components for the pug templating language",
   "keywords": [
-    "jade"
+    "pug"
   ],
   "dependencies": {},
   "devDependencies": {
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jadejs/jade-runtime.git"
+    "url": "https://github.com/pugjs/pug-runtime.git"
   },
   "author": "ForbesLindesay",
   "license": "MIT"

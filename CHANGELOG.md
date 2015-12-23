@@ -14,14 +14,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Deprecated
 - Internal variables, or variables or functions that were not exported but
-  visible through `require('jade-runtime/build')`, will not be visible through
-  `require('jade-runtime/build')` anymore.
-- `jade_encode_html_rules` and `jade_encode_char`, two internal variables, have
+  visible through `require('pug-runtime/build')`, will not be visible through
+  `require('pug-runtime/build')` anymore.
+- `pug_encode_html_rules` and `pug_encode_char`, two internal variables, have
   now been removed. Please note that any further changes to these internal
   variables will not come with a major bump.
 
 ### Added
-- A new module `require('jade-runtime/wrap')` is added to ease testing
+- A new module `require('pug-runtime/wrap')` is added to ease testing
   client-side templates.
 
 ## 1.1.0 - 2015-07-09

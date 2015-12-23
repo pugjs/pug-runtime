@@ -21,8 +21,8 @@ ast.body.forEach(function (node) {
     case 'Defun': name = node.name.name;                break;
     case 'Var':   name = node.definitions[0].name.name; break;
   }
-  if (!name || !/^jade\_/.test(name)) return;
-  name = name.replace(/^jade\_/, '');
+  if (!name || !/^pug\_/.test(name)) return;
+  name = name.replace(/^pug\_/, '');
 
   var src = uglify.minify(source.substring(node.start.pos, node.end.endpos), {fromString: true}).code;
   sources[name] = src;
@@ -34,8 +34,8 @@ ast.body.forEach(function (node) {
     var globals = ast.globals.map(function (val, key) {
       return key;
     });
-    dependencies[name] = globals.filter(function (key) { return /^jade\_/.test(key); })
-                                .map(function (key) { return key.replace(/^jade\_/, ''); });
+    dependencies[name] = globals.filter(function (key) { return /^pug\_/.test(key); })
+                                .map(function (key) { return key.replace(/^pug\_/, ''); });
   }
 
   if (!runtime[name]) internals[name] = true;

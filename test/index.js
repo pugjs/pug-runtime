@@ -10,8 +10,8 @@ function test(name, fn) {
   testit(name, function () {
 
     fn(runtime[name]);
-    fn(Function('', build([name]) + ';return jade_' + name + ';')());
-    fn(wrap('function t() {return jade.' + name + ';}', 't')())
+    fn(Function('', build([name]) + ';return pug_' + name + ';')());
+    fn(wrap('function t() {return pug.' + name + ';}', 't')())
   });
 }
 

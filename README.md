@@ -3,7 +3,7 @@
 The runtime components for the pug templating language
 
 [![Build Status](https://img.shields.io/travis/pugjs/pug-runtime/master.svg)](https://travis-ci.org/pugjs/pug-runtime)
-[![Dependency Status](https://img.shields.io/gemnasium/pugjs/pug-runtime.svg)](https://gemnasium.com/pugjs/pug-runtime)
+[![Dependency Status](https://img.shields.io/david/pugjs/pug-runtime.svg)](https://david-dm.org/pugjs/pug-runtime)
 [![NPM version](https://img.shields.io/npm/v/pug-runtime.svg)](https://www.npmjs.org/package/pug-runtime)
 
 ## Installation

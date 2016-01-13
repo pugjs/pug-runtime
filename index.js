@@ -156,20 +156,20 @@ exports.attrs = pug_attrs;
 function pug_attrs(obj, terse){
   var attrs = '';
 
-  var keys = Object.keys(obj);
-  for (var i = 0; i < keys.length; ++i) {
-    var key = keys[i]
-      , val = obj[key];
+  for (var key in obj) {
+    if (pug_has_own_property.call(obj, key)) {
+      var val = obj[key];
 
-    if ('class' === key) {
-      val = pug_classes(val);
-      attrs = pug_attr(key, val, false, terse) + attrs;
-      continue;
+      if ('class' === key) {
+        val = pug_classes(val);
+        attrs = pug_attr(key, val, false, terse) + attrs;
+        continue;
+      }
+      if ('style' === key) {
+        val = pug_style(val);
+      }
+      attrs += pug_attr(key, val, false, terse);
     }
-    if ('style' === key) {
-      val = pug_style(val);
-    }
-    attrs += pug_attr(key, val, false, terse);
   }
 
   return attrs;

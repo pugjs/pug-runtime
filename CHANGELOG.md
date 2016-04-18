@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.1
+### Changed
+- This package has been renamed to pug-runtime.
+- `attrs()` has been optimized.
+
 ## 2.0.0
 ### Changed
 - `classes()` has been optimized, making it more than 9x faster.

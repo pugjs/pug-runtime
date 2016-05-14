@@ -133,9 +133,10 @@ function pug_attr(key, val, escaped, terse) {
   if (val === true) {
     return ' ' + (terse ? key : key + '="' + key + '"');
   }
-  if (typeof val.toISOString === 'function') {
-    val = val.toISOString();
-  } else if (typeof val !== 'string') {
+  if (typeof val.toJSON === 'function') {
+    val = val.toJSON();
+  }
+  if (typeof val !== 'string') {
     val = JSON.stringify(val);
     if (!escaped && val.indexOf('"') !== -1) {
       return ' ' + key + '=\'' + val.replace(/'/g, '&#39;') + '\'';

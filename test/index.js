@@ -40,6 +40,10 @@ test('attr', function (attr) { // (key, val, escaped, terse)
   assert(attr('key', new Date('2014-12-28T16:46:06.962Z'), true, false) === ' key="2014-12-28T16:46:06.962Z"');
   assert(attr('key', new Date('2014-12-28T16:46:06.962Z'), false, false) === ' key="2014-12-28T16:46:06.962Z"');
 
+  // Custom JSON Attributes
+  assert(attr('key', {toJSON: function () { return 'bar'; }}, true, false) === ' key="bar"');
+  assert(attr('key', {toJSON: function () { return {foo: 'bar'}; }}, true, false) === ' key="{&quot;foo&quot;:&quot;bar&quot;}"');
+
   // JSON Attributes
   assert(attr('key', {foo: 'bar'}, true, true) === ' key="{&quot;foo&quot;:&quot;bar&quot;}"');
   assert(attr('key', {foo: 'bar'}, false, true) === ' key=\'{"foo":"bar"}\'');

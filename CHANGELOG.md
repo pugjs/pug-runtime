@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.2
+### Changed
+- `require('fs')` calls will now be ignored by browser bundlers, through using
+  `browser` field in `package.json`. Fallbacks for cases where `fs` module is
+  not available were already in place prior to this release.
+
 ## 2.0.1
 ### Changed
 - This package has been renamed to pug-runtime.

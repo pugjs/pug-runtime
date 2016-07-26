@@ -30,6 +30,9 @@
     "type": "git",
     "url": "https://github.com/pugjs/pug-runtime.git"
   },
+  "browser": {
+    "fs": false
+  },
   "author": "ForbesLindesay",
   "license": "MIT"
 }

@@ -80,10 +80,10 @@ test('attrs', function (attrs) { // (obj, terse)
   assert(attrs({class: ['foo', {bar: true}]}, false) === ' class="foo bar"');
   assert(attrs({class: ['foo', {bar: true}], foo: 'bar'}, true) === ' class="foo bar" foo="bar"');
   assert(attrs({foo: 'bar', class: ['foo', {bar: true}]}, false) === ' class="foo bar" foo="bar"');
-  assert(attrs({style: 'foo: bar;'}, true) === ' style="foo: bar"');
-  assert(attrs({style: 'foo: bar;'}, false) === ' style="foo: bar"');
-  assert(attrs({style: {foo: 'bar'}}, true) === ' style="foo:bar"');
-  assert(attrs({style: {foo: 'bar'}}, false) === ' style="foo:bar"');
+  assert(attrs({style: 'foo: bar;'}, true) === ' style="foo: bar;"');
+  assert(attrs({style: 'foo: bar;'}, false) === ' style="foo: bar;"');
+  assert(attrs({style: {foo: 'bar'}}, true) === ' style="foo:bar;"');
+  assert(attrs({style: {foo: 'bar'}}, false) === ' style="foo:bar;"');
 });
 
 test('classes', function (classes) {
@@ -115,24 +115,26 @@ test('merge', function (merge) {
   assert.deepEqual(merge({}, {class: ['bar']}), {class: ['bar']});
   assert.deepEqual(merge({class: ['bar']}, {}), {class: ['bar']});
 
-  assert.deepEqual(merge({style: 'foo:bar'}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash'});
-  assert.deepEqual(merge({style: 'foo:bar;'}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash'});
-  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash'});
-  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: {baz: 'bash'}}), {style: 'foo:bar;baz:bash'});
-  assert.deepEqual(merge({style: 'foo:bar'}, {style: null}), {style: 'foo:bar'});
-  assert.deepEqual(merge({style: 'foo:bar;'}, {style: null}), {style: 'foo:bar'});
-  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: null}), {style: 'foo:bar'});
-  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash'});
-  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash'});
-  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash'});
-  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash'});
-  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash'});
-  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash'});
+  assert.deepEqual(merge({style: 'foo:bar'}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash;'});
+  assert.deepEqual(merge({style: 'foo:bar;'}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash;'});
+  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: 'baz:bash'}), {style: 'foo:bar;baz:bash;'});
+  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: {baz: 'bash'}}), {style: 'foo:bar;baz:bash;'});
+  assert.deepEqual(merge({style: 'foo:bar'}, {style: null}), {style: 'foo:bar;'});
+  assert.deepEqual(merge({style: 'foo:bar;'}, {style: null}), {style: 'foo:bar;'});
+  assert.deepEqual(merge({style: {foo: 'bar'}}, {style: null}), {style: 'foo:bar;'});
+  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash;'});
+  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash;'});
+  assert.deepEqual(merge({style: null}, {style: 'baz:bash'}), {style: 'baz:bash;'});
+  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash;'});
+  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash;'});
+  assert.deepEqual(merge({}, {style: 'baz:bash'}), {style: 'baz:bash;'});
 });
 
 test('style', function (style) {
-  assert(style('foo: bar') === 'foo: bar');
-  assert(style('foo: bar;') === 'foo: bar');
-  assert(style({foo: 'bar'}) === 'foo:bar');
-  assert(style({foo: 'bar', baz: 'bash'}) === 'foo:bar;baz:bash');
+  assert(style(null) === '');
+  assert(style('') === '');
+  assert(style('foo: bar') === 'foo: bar;');
+  assert(style('foo: bar;') === 'foo: bar;');
+  assert(style({foo: 'bar'}) === 'foo:bar;');
+  assert(style({foo: 'bar', baz: 'bash'}) === 'foo:bar;baz:bash;');
 });

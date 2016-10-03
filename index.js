@@ -109,6 +109,7 @@ function pug_style(val) {
     }
     return out;
   } else {
+    val += '';
     if (val[val.length - 1] !== ';') 
       return val + ';';
     return val;

@@ -58,35 +58,43 @@ function pug_merge(a, b) {
  * @return {String}
  */
 exports.classes = pug_classes;
-function pug_classes_array(val, escaping) {
-  var classString = '', className, padding = '', escapeEnabled = Array.isArray(escaping);
+function pug_classes_array(val, escaping, out) {
+  var escapeAlways = escaping === true;
+  var escapeEnabled = Array.isArray(escaping);
   for (var i = 0; i < val.length; i++) {
-    className = pug_classes(val[i]);
-    if (!className) continue;
-    escapeEnabled && escaping[i] && (className = pug_escape(className));
-    classString = classString + padding + className;
-    padding = ' ';
-  }
-  return classString;
-}
-function pug_classes_object(val) {
-  var classString = '', padding = '';
-  for (var key in val) {
-    if (key && val[key] && pug_has_own_property.call(val, key)) {
-      classString = classString + padding + key;
-      padding = ' ';
+    var escape = escapeAlways || escapeEnabled && escaping[i];
+    var cur = val[i];
+    if (Array.isArray(cur)) {
+      pug_classes_array(cur, escape, out);
+    } else if (cur && typeof cur === 'object') {
+      for (var key in cur) {
+        if (cur[key] && pug_has_own_property.call(cur, key)) {
+          out[escape ? pug_escape(key) : key] = true;
+        }
+      }
+    } else if (cur) {
+      out[escape ? pug_escape(cur) : cur] = true;
     }
   }
-  return classString;
+  return out;
 }
 function pug_classes(val, escaping) {
-  if (Array.isArray(val)) {
-    return pug_classes_array(val, escaping);
-  } else if (val && typeof val === 'object') {
-    return pug_classes_object(val);
-  } else {
-    return val || '';
+  if (typeof val === 'string') return val;
+  else if (Array.isArray(val)) {
+    var out = {};
+    pug_classes_array(val, escaping, out);
+    val = out;
   }
+  if (val && typeof val === 'object') {
+    var classString = '', padding = '';
+    for (var key in val) {
+      if (val[key] && pug_has_own_property.call(val, key)) {
+        classString = classString + padding + key;
+        padding = ' ';
+      }
+    }
+    return classString;
+  } else return '';
 }
 
 /**
